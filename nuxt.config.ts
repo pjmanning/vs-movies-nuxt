@@ -7,5 +7,5 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt', '@pinia/nuxt'],
+  modules: ['@vueuse/nuxt', '@pinia/nuxt', '@nuxthq/ui'],
 })
