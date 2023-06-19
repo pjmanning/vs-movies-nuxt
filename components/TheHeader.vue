@@ -1,11 +1,7 @@
 <script setup></script>
 
 <template>
-  <TheHeader />
-  <div>
-    <slot />
-  </div>
-  <TheFooter />
+  <div>Header</div>
 </template>
 
 <style></style>
