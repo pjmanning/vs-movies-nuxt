@@ -2,7 +2,7 @@
 
 <template>
   <TheHeader />
-  <div>
+  <div data-scroll>
     <slot />
   </div>
   <TheFooter />

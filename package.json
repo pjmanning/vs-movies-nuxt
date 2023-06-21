@@ -16,6 +16,7 @@
     "prettier-plugin-tailwindcss": "^0.3.0"
   },
   "dependencies": {
+    "@formkit/nuxt": "^0.17.3",
     "@nuxthq/ui": "^2.4.0",
     "@pinia/nuxt": "^0.4.11",
     "@vueuse/nuxt": "^10.2.0"
