@@ -23,7 +23,7 @@ defineProps({
     <p class="mt-1 text-lg font-medium text-gray-100">{{ new Date(movie.release_date).getFullYear() }}</p>
 
     <div class="flex items-center gap-2 text-sm">
-      <div relative="" aspect="11/2" filter-hue-rotate-320deg="" w-20=""><img src="/stars.webp" absolute="" inset-0="" aria-hidden="true" /><img src="/stars-filled.webp" absolute="" inset-0="" aria-hidden="true" style="clip-path: inset(0px 27% 0px 0px)" /></div>
+      <!-- <div relative="" aspect="11/2" filter-hue-rotate-320deg="" w-20=""><img src="/stars.webp" absolute="" inset-0="" aria-hidden="true" /><img src="/stars-filled.webp" absolute="" inset-0="" aria-hidden="true" style="clip-path: inset(0px 27% 0px 0px)" /></div> -->
       <div op60="">7.3</div>
     </div>
 
