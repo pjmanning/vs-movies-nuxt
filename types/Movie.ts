@@ -16,6 +16,7 @@ export interface Movie {
   vote_average: number
   vote_count: number
   reviews: Review[]
+  status: string
 
   original_name?: string
   first_air_date?: string
