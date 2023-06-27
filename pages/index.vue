@@ -41,9 +41,9 @@ const sections = [
     <Loading class="h-24 w-24" />
   </div>
   <div v-else-if="errorPopular || errorTopRated || errorUpcoming || errorNowPlaying">Error</div>
-  <div v-else>
+  <div v-else class="pt-4">
     <div v-for="category in sections">
-      <div class="mt-5 flex items-center px-10 py-3">
+      <div class="flex items-center px-10 py-3">
         <div class="text-2xl">{{ category.title }}</div>
         <div class="flex-auto"></div>
         <!-- <NuxtLink :href="`/movies/category/${category.title}`" class="" n-link="">Explore more</NuxtLink> -->

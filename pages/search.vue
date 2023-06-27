@@ -15,6 +15,33 @@ interface SortOption {
 const isLoading = ref(false)
 const isResults = ref(true)
 const movies = ref<Movie[]>([])
+const sortedMovies = computed(() => {
+  if (selectedSort.value.val === 'primary_release_date.asc') {
+    return movies.value.sort((a, b) => b.release_date.localeCompare(a.release_date))
+  } else if (selectedSort.value.val === 'vote_average.asc') {
+    return movies.value.sort((a, b) => b.vote_average - a.vote_average)
+  } else if (selectedSort.value.val === 'title') {
+    return movies.value.sort((a, b) => a.title.localeCompare(b.title))
+  } else {
+    return movies.value
+  }
+})
+const filteredMovies = computed(() => {
+  const moviesWithRating = sortedMovies.value.map((movie) => {
+    const movieIndex = movies.value.findIndex((m) => m.id === movie.id)
+    if (movieIndex !== -1) {
+      return { ...movie, rating: movies.value[movieIndex].rating }
+    } else {
+      return movie
+    }
+  })
+
+  if (selectedGenres.value.length === 0) {
+    return moviesWithRating
+  } else {
+    return moviesWithRating.filter((item) => item.genre_ids.some((genre) => selectedGenres.value.includes(genre)))
+  }
+})
 const numberOfPages = ref(0)
 const numberOfMovies = ref(0)
 const page = ref(1)
@@ -118,90 +145,6 @@ watch(
       </div>
     </div>
 
-    <div class="z-50 mt-4 px-4">
-      <!-- Filters -->
-      <Disclosure as="section" aria-labelledby="filter-heading" class="grid items-center border-b border-t border-gray-600">
-        <h2 id="filter-heading" class="sr-only">Filters</h2>
-        <div class="relative col-start-1 row-start-1 py-4">
-          <div class="mx-auto flex max-w-7xl space-x-6 divide-x divide-gray-100 px-4 text-sm sm:px-6 lg:px-8">
-            <div>
-              <DisclosureButton class="group flex items-center font-medium text-gray-300">
-                <UIcon name="i-heroicons-funnel" class="mr-2 h-5 w-5 flex-none text-gray-300 group-hover:text-gray-200" aria-hidden="true" />
-                <span v-if="selectedGenres.length > 0">{{ selectedGenres.length }} Genres</span>
-                <span v-else>Filter</span>
-              </DisclosureButton>
-            </div>
-            <div v-if="selectedSort.val !== null || selectedGenres.length > 0" class="pl-6">
-              <button @click="clearFilters" type="button" class="text-gray-300">Clear all</button>
-            </div>
-          </div>
-        </div>
-        <DisclosurePanel class="border-t border-gray-500 bg-gray-900 py-10">
-          <div class="mx-auto grid max-w-7xl grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-            <div class="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
-              <fieldset>
-                <div class="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
-                  <div v-for="(option, optionIdx) in [genres[0], genres[1], genres[2], genres[3], genres[4]]" :key="option.value" class="flex items-center text-base sm:text-sm">
-                    <input v-model="selectedGenres" :id="option.value.toString()" name="price[]" :value="option.value" type="checkbox" class="h-4 w-4 flex-shrink-0 rounded border-gray-300 text-indigo-200 focus:ring-indigo-500" />
-                    <label :for="`price-${optionIdx}`" class="ml-3 min-w-0 flex-1 text-gray-200">{{ option.label }}</label>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <div class="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
-                  <div v-for="(option, optionIdx) in [genres[5], genres[6], genres[7], genres[8], genres[9]]" :key="option.value" class="flex items-center text-base sm:text-sm">
-                    <input v-model="selectedGenres" :id="option.value.toString()" name="color[]" :value="option.value" type="checkbox" class="h-4 w-4 flex-shrink-0 rounded border-gray-300 text-indigo-200 focus:ring-indigo-500" />
-                    <label :for="`color-${optionIdx}`" class="ml-3 min-w-0 flex-1 text-gray-200">{{ option.label }}</label>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-            <div class="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
-              <fieldset>
-                <div class="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
-                  <div v-for="(option, optionIdx) in [genres[10], genres[11], genres[12], genres[13], genres[14]]" :key="option.value" class="flex items-center text-base sm:text-sm">
-                    <input v-model="selectedGenres" :id="option.value.toString()" name="size[]" :value="option.value" type="checkbox" class="h-4 w-4 flex-shrink-0 rounded border-gray-300 text-indigo-200 focus:ring-indigo-500" />
-                    <label :for="`size-${optionIdx}`" class="ml-3 min-w-0 flex-1 text-gray-200">{{ option.label }}</label>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <div class="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
-                  <div v-for="(option, optionIdx) in [genres[15], genres[16], genres[17], genres[18]]" :key="option.value" class="flex items-center text-base sm:text-sm">
-                    <input v-model="selectedGenres" :id="option.value.toString()" name="category[]" :value="option.value" type="checkbox" class="h-4 w-4 flex-shrink-0 rounded border-gray-300 text-indigo-200 focus:ring-indigo-500" />
-                    <label :for="`category-${optionIdx}`" class="ml-3 min-w-0 flex-1 text-gray-200">{{ option.label }}</label>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-          </div>
-        </DisclosurePanel>
-        <div class="col-start-1 row-start-1 py-4">
-          <div class="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8">
-            <Menu as="div" class="relative inline-block">
-              <div class="flex">
-                <MenuButton class="group inline-flex justify-center text-sm font-medium text-gray-300 hover:text-gray-100">
-                  <span v-if="!selectedSort.name">Sort</span>
-                  <span v-else>{{ selectedSort.name }}</span>
-                  <UIcon name="i-heroicons-chevron-down" class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-300 group-hover:text-gray-200" aria-hidden="true" />
-                </MenuButton>
-              </div>
-
-              <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <MenuItems class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <div class="py-1">
-                    <MenuItem v-for="option in sortOptions" :key="option.name" v-slot="{ active }">
-                      <button @click="selectedSort = option" :class="[selectedSort.name === option.name ? 'font-medium text-gray-900' : 'text-gray-500', active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-left text-sm']">{{ option.name }}</button>
-                    </MenuItem>
-                  </div>
-                </MenuItems>
-              </transition>
-            </Menu>
-          </div>
-        </div>
-      </Disclosure>
-    </div>
-
     <div v-if="isLoading" class="flex flex-auto items-center justify-center">
       <Loading class="-mt-20 h-20 w-20" />
     </div>
@@ -220,7 +163,91 @@ watch(
       </div>
     </template>
     <ul v-else>
-      <MovieList :movies="movies" />
+      <div class="z-50 mt-4 px-4">
+        <!-- Filters -->
+        <Disclosure as="section" aria-labelledby="filter-heading" class="grid items-center border-b border-t border-gray-600">
+          <h2 id="filter-heading" class="sr-only">Filters</h2>
+          <div class="relative col-start-1 row-start-1 py-4">
+            <div class="mx-auto flex max-w-7xl space-x-6 divide-x divide-gray-100 px-4 text-sm sm:px-6 lg:px-8">
+              <div>
+                <DisclosureButton class="group flex items-center font-medium text-gray-300">
+                  <UIcon name="i-heroicons-funnel" class="mr-2 h-5 w-5 flex-none text-gray-300 group-hover:text-gray-200" aria-hidden="true" />
+                  <span v-if="selectedGenres.length > 0">{{ selectedGenres.length }} Genres</span>
+                  <span v-else>Filter</span>
+                </DisclosureButton>
+              </div>
+              <div v-if="selectedSort.val !== null || selectedGenres.length > 0" class="pl-6">
+                <button @click="clearFilters" type="button" class="text-gray-300">Clear all</button>
+              </div>
+            </div>
+          </div>
+          <DisclosurePanel class="border-t border-gray-500 bg-gray-900 py-10">
+            <div class="mx-auto grid max-w-7xl grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
+              <div class="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
+                <fieldset>
+                  <div class="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+                    <div v-for="(option, optionIdx) in [genres[0], genres[1], genres[2], genres[3], genres[4]]" :key="option.value" class="flex items-center text-base sm:text-sm">
+                      <input v-model="selectedGenres" :id="option.value.toString()" name="price[]" :value="option.value" type="checkbox" class="h-4 w-4 flex-shrink-0 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <label :for="`price-${optionIdx}`" class="ml-3 min-w-0 flex-1 text-gray-200">{{ option.label }}</label>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <div class="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+                    <div v-for="(option, optionIdx) in [genres[5], genres[6], genres[7], genres[8], genres[9]]" :key="option.value" class="flex items-center text-base sm:text-sm">
+                      <input v-model="selectedGenres" :id="option.value.toString()" name="color[]" :value="option.value" type="checkbox" class="h-4 w-4 flex-shrink-0 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <label :for="`color-${optionIdx}`" class="ml-3 min-w-0 flex-1 text-gray-200">{{ option.label }}</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
+                <fieldset>
+                  <div class="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+                    <div v-for="(option, optionIdx) in [genres[10], genres[11], genres[12], genres[13], genres[14]]" :key="option.value" class="flex items-center text-base sm:text-sm">
+                      <input v-model="selectedGenres" :id="option.value.toString()" name="size[]" :value="option.value" type="checkbox" class="h-4 w-4 flex-shrink-0 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <label :for="`size-${optionIdx}`" class="ml-3 min-w-0 flex-1 text-gray-200">{{ option.label }}</label>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <div class="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
+                    <div v-for="(option, optionIdx) in [genres[15], genres[16], genres[17], genres[18]]" :key="option.value" class="flex items-center text-base sm:text-sm">
+                      <input v-model="selectedGenres" :id="option.value.toString()" name="category[]" :value="option.value" type="checkbox" class="h-4 w-4 flex-shrink-0 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                      <label :for="`category-${optionIdx}`" class="ml-3 min-w-0 flex-1 text-gray-200">{{ option.label }}</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </DisclosurePanel>
+          <div class="col-start-1 row-start-1 py-4">
+            <div class="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8">
+              <Menu as="div" class="relative inline-block">
+                <div class="flex">
+                  <MenuButton class="group inline-flex justify-center text-sm font-medium text-gray-300 hover:text-gray-100">
+                    <span v-if="!selectedSort.name">Sort</span>
+                    <span v-else>{{ selectedSort.name }}</span>
+                    <UIcon name="i-heroicons-chevron-down" class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-300 group-hover:text-gray-200" aria-hidden="true" />
+                  </MenuButton>
+                </div>
+
+                <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                  <MenuItems class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div class="py-1">
+                      <MenuItem v-for="option in sortOptions" :key="option.name" v-slot="{ active }">
+                        <button @click="selectedSort = option" :class="[selectedSort.name === option.name ? 'font-medium text-gray-900' : 'text-gray-500', active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-left text-sm']">{{ option.name }}</button>
+                      </MenuItem>
+                    </div>
+                  </MenuItems>
+                </transition>
+              </Menu>
+            </div>
+          </div>
+        </Disclosure>
+      </div>
+
+      <MovieList :movies="filteredMovies" />
       <div class="my-20 flex justify-center">
         <UPagination v-model="page" :page-count="20" :total="numberOfMovies" />
       </div>

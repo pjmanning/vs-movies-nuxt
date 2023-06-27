@@ -20,21 +20,16 @@ defineProps({
       </template>
     </div>
     <h3 class="mt-2">{{ movie.title }}</h3>
-    <p class="mt-1 text-lg font-medium text-gray-100">{{ new Date(movie.release_date).getFullYear() }}</p>
 
-    <div class="flex items-center gap-2 text-sm">
-      <!-- <div relative="" aspect="11/2" filter-hue-rotate-320deg="" w-20=""><img src="/stars.webp" absolute="" inset-0="" aria-hidden="true" /><img src="/stars-filled.webp" absolute="" inset-0="" aria-hidden="true" style="clip-path: inset(0px 27% 0px 0px)" /></div> -->
-      <div op60="">{{ movie.vote_average }}</div>
+    <div>
+      <div class="mt-1 flex items-center">
+        <UIcon name="i-heroicons-star-solid" v-for="rating in [0, 1, 2, 3, 4]" :key="rating" :class="[movie?.vote_average / 2 > rating ? 'text-yellow-400' : 'text-gray-300', 'h-5 w-5 flex-shrink-0']" aria-hidden="true" />
+        <p class="ml-2 text-sm text-gray-300">{{ movie?.vote_average }}</p>
+      </div>
+      <p class="sr-only">{{ movie?.vote_average / 2 }} out of 5 stars</p>
     </div>
 
-    <!-- <div class="mt-1 flex">
-          <button type="button" v-for="i in 5" :class="{ 'mr-1': i < 5 }" @click="updateRating(movie, i)">
-            <StarIcon class="block h-6 w-6" :class="[movie.reviews[0].rating >= i ? ' text-blue-400' : ' text-gray-400']" />
-          </button>
-          <div class="ml-auto">{{ Number(movie.vote_average / 2).toFixed(2) }}</div>
-        </div>
-
-        <button @click="viewReviews(movie.id)" class="mt-1 text-sm text-gray-900">{{ movie.reviews ? movie.reviews.length : 0 }} Reviews</button> -->
+    <p class="mt-1 text-lg font-medium text-gray-100">{{ new Date(movie.release_date).getFullYear() }}</p>
   </NuxtLink>
 </template>
 
