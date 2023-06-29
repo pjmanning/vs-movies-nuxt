@@ -22,7 +22,7 @@ function changePage(item: any) {
           <button v-for="item in navigation" :key="item.name" class="w-full text-left font-semibold leading-6" @click="changePage(item)">{{ item.name }}</button>
         </div>
         <div class="flex lg:hidden">
-          <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = true">
+          <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white" @click="mobileMenuOpen = true">
             <span class="sr-only">Open main menu</span>
             <UIcon name="i-heroicons-bars-3" class="h-6 w-6" aria-hidden="true" />
           </button>

@@ -32,6 +32,16 @@ async function addMovieToList(listId: number) {
         <h3>Add to List</h3>
       </template>
 
+      <div v-if="movieStore.lists.length < 1" class="text-center">
+        <UIcon name="i-heroicons-list-bullet" class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
+        <h3 class="mt-2 text-sm font-semibold text-gray-100">No Lists</h3>
+        <p class="mt-1 text-sm text-gray-300">Get started by creating a new list.</p>
+        <div class="mt-6">
+          <NuxtLink to="/list" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Go Create a List
+          </NuxtLink>
+        </div>
+      </div>
       <ul role="list" class="divide-y divide-gray-400">
         <li v-for="list in movieStore.lists" :key="list.id" class="flex cursor-pointer justify-between gap-x-6 px-2 py-5 hover:bg-gray-800" @click="addMovieToList(list.id)">
           <div class="flex gap-x-4">

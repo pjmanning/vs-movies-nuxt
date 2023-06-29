@@ -2,6 +2,7 @@
 import { useMovieStore } from '@/stores/movies'
 import type { Movie } from '@/types'
 
+const movieStore = useMovieStore()
 const route = useRoute()
 
 const {
@@ -11,22 +12,18 @@ const {
 } = useFetch<Movie>(`/api/movie/${route.params.id}`, {
   lazy: true,
 })
+const currentReview = ref(movieStore.reviews.find((review) => review.id === movie.value?.id))
 
 ////////// RATINGS //////////
-const movieStore = useMovieStore()
 const updateRating = (movie: Movie, rating: number) => {
   const movieIndex = movieStore.movies.findIndex((m) => m.id === movie.id)
   if (movieIndex !== -1) {
     // edit the rating in the reviews array
     movieStore.movies[movieIndex].reviews = movieStore.movies[movieIndex].reviews.map((review) => {
-      if (review.author === 'You') {
-        return { ...review, rating: rating }
-      } else {
-        return review
-      }
+      return { ...review, rating: rating }
     })
   } else {
-    movieStore.movies.push({ ...movie, reviews: [{ id: Math.floor(Math.random() * 1000001), title: '', content: '', rating: rating, author: '', date: new Date() }] })
+    movieStore.movies.push({ ...movie, reviews: [{ id: Math.floor(Math.random() * 1000001), content: '', rating: rating, date: new Date() }] })
   }
 }
 
@@ -63,7 +60,7 @@ const isListModalOpen = ref(false)
         </nav>
 
         <div class="mt-4">
-          <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">{{ movie.title }}</h1>
+          <h1 class="text-xl font-bold tracking-tight text-white sm:text-4xl">{{ movie.title }}</h1>
         </div>
 
         <section aria-labelledby="information-heading" class="mt-4">
@@ -84,7 +81,8 @@ const isListModalOpen = ref(false)
                 <p class="ml-2 text-sm text-gray-300">{{ movie.vote_count }} reviews -</p>
 
                 <div class="ml-2">
-                  <UButton label="Write a review" @click="isReviewModalOpen = true" />
+                  <UButton v-if="currentReview" label="Your review" @click="isReviewModalOpen = true" />
+                  <UButton v-else label="Write a review" @click="isReviewModalOpen = true" />
                   <ReviewModal :movie="movie" :is-review-modal-open="isReviewModalOpen" @update:isReviewModalOpen="isReviewModalOpen = $event" @saveReview="saveReview" @closeReviewModal="isReviewModalOpen = false" />
                 </div>
               </div>

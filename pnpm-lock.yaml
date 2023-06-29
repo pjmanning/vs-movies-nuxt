@@ -5,9 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@formkit/icons':
+    specifier: ^0.17.3
+    version: 0.17.3
   '@formkit/nuxt':
     specifier: ^0.17.3
     version: 0.17.3(tailwindcss@3.3.2)(vue@3.3.4)
+  '@formkit/pro':
+    specifier: ^0.112.6
+    version: 0.112.6
   '@nuxthq/ui':
     specifier: ^2.4.0
     version: 2.4.0(vue@3.3.4)(webpack@5.87.0)
@@ -611,6 +617,12 @@ packages:
       '@formkit/validation': 0.17.3
     dev: false
 
+  /@formkit/icons@0.17.3:
+    resolution: {integrity: sha512-/kiIIsvHKhEL7JV9ltDgI8+lUQXM6c4okdPyVCOfeMhQe9gs5djPeh7JWwPYD+RBudN2VrEgFHs1DrHNN5HkVg==}
+    dependencies:
+      '@formkit/core': 0.17.3
+    dev: false
+
   /@formkit/inputs@0.17.3:
     resolution: {integrity: sha512-yWOwNpKwBoDx6CNUyF01ZVrAquePcNTyBl1XhH1+f9YIvCfMGCqLwwAKAdguv3Lsnj4uoPZywRyWzvH7vrhO8w==}
     dependencies:
@@ -639,6 +651,12 @@ packages:
     dependencies:
       '@formkit/core': 0.17.3
       '@formkit/utils': 0.17.3
+    dev: false
+
+  /@formkit/pro@0.112.6:
+    resolution: {integrity: sha512-Elz+QjQDUY7MEDBOKgHryjeila1C/1EHn+CxrITb8wJ7LdldmChNq2+WAi1rq0jBCo/0UwfBS+DSfTbHDGrHpg==}
+    dependencies:
+      '@formkit/inputs': 0.17.3
     dev: false
 
   /@formkit/rules@0.17.3:

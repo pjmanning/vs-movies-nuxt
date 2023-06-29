@@ -3,6 +3,8 @@ import { Movie } from '../../types'
 export default defineEventHandler(async (event) => {
   const config = await useRuntimeConfig()
   const { ids } = await getQuery(event)
+  // if single id is provided, convert to array
+  //   const idsArray = Array.isArray(ids) ? ids : [ids]
   const idsArray = await String(ids)?.split(',')
 
   let movieArray: Movie[] = []
