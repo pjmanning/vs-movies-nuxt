@@ -12,9 +12,6 @@ const {
   lazy: true,
 })
 
-const isReviewModalOpen = ref(false)
-const isAddtoListModalOpen = ref(false)
-
 ////////// RATINGS //////////
 const movieStore = useMovieStore()
 const updateRating = (movie: Movie, rating: number) => {
@@ -34,6 +31,7 @@ const updateRating = (movie: Movie, rating: number) => {
 }
 
 ////////// REVIEW MODAL //////////
+const isReviewModalOpen = ref(false)
 const openReviewModal = ref(false)
 const selectedMovie = ref({} as Movie)
 const reviewName = ref(null)
@@ -53,11 +51,11 @@ const isListModalOpen = ref(false)
 
 <template>
   <div>
-    <div v-if="pending" class="flex h-screen items-center justify-center">
+    <div v-if="pending" class="flex min-h-screen items-center justify-center">
       <Loading class="h-24 w-24" />
     </div>
     <div v-else-if="error"></div>
-    <div v-else-if="movie" class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+    <div v-else-if="movie" class="mx-auto min-h-screen max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
       <!-- Movie details -->
       <div class="lg:max-w-lg lg:self-end">
         <nav aria-label="Breadcrumb" class="font-medium text-gray-300">
@@ -115,7 +113,7 @@ const isListModalOpen = ref(false)
 
       <div class="mt-10">
         <UButton label="Add to List" color="violet" @click="isListModalOpen = true" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50" />
-        <ListModal :movie="movie" :is-list-modal-open="isListModalOpen" @update:isListModalOpen="isListModalOpen = $event" />
+        <ListModal :movie="movie" :is-list-modal-open="isListModalOpen" @update:isListModalOpen="isListModalOpen = $event" @closeListModal="isListModalOpen = false" />
       </div>
     </div>
   </div>

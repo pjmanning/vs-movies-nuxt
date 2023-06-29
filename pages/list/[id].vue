@@ -11,7 +11,7 @@ const list = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto h-screen max-w-7xl px-4 py-10">
+  <div class="mx-auto min-h-screen max-w-7xl px-4 py-10">
     <h1 class="text-2xl font-bold">{{ list?.name }}</h1>
 
     <div v-if="list?.movies.length === 0" class="-mt-24 flex h-full flex-col place-content-center text-center">
@@ -26,7 +26,7 @@ const list = computed(() => {
       </div>
     </div>
 
-    <div v-else-if="list?.movies.length > 0">
+    <div v-else-if="list?.movies.length > 0" class="mb-20">
       <MovieList :movies="list!.movies" />
     </div>
   </div>

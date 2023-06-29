@@ -6,6 +6,8 @@
     <slot />
   </div>
   <TheFooter />
+
+  <UNotifications />
 </template>
 
 <style></style>
