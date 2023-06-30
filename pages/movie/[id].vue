@@ -78,7 +78,7 @@ const isListModalOpen = ref(false)
                   </div>
                   <p class="sr-only">{{ movie.vote_average / 2 }} out of 5 stars</p>
                 </div>
-                <p class="ml-2 text-sm text-gray-300">{{ movie.vote_count }} reviews <span class="hidden sm:block">-</span></p>
+                <p class="ml-2 text-sm text-gray-300">{{ movie.vote_count }} reviews <span class="hidden sm:inline-block">-</span></p>
                 <div class="mt-2 hidden sm:ml-2 sm:block">
                   <UButton v-if="currentReview" block size="lg" label="Your review" @click="isReviewModalOpen = true" />
                   <UButton v-else block size="lg" label="Write a review" @click="isReviewModalOpen = true" />
