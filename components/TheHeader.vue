@@ -38,7 +38,7 @@ function changePage(item: any) {
     </nav>
     <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
       <div class="fixed inset-0 z-10" />
-      <DialogPanel class="fixed inset-y-0 left-0 z-10 w-full overflow-y-auto bg-white px-6 py-6">
+      <DialogPanel class="fixed inset-y-0 left-0 z-[60] w-full overflow-y-auto bg-white px-6 py-6">
         <div class="flex items-center justify-between">
           <div class="flex flex-1">
             <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
