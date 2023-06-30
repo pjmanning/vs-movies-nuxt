@@ -80,6 +80,7 @@ function cancelDelete() {
     </UCard>
   </UModal>
 
+  <!-- PAGE -->
   <div class="mx-auto h-screen max-w-7xl px-4 py-10">
     <h1 class="text-2xl font-bold">Your Lists</h1>
     <div v-if="lists.length === 0" class="-mt-20 flex h-full flex-col place-content-center text-center">
@@ -115,8 +116,4 @@ function cancelDelete() {
   </div>
 </template>
 
-<style scoped>
-.list-avatar {
-  background-color: #fff;
-}
-</style>
+<style scoped></style>

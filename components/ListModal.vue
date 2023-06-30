@@ -13,7 +13,6 @@ const props = defineProps({
     required: true,
   },
 })
-
 const emits = defineEmits(['closeListModal'])
 
 const movieStore = useMovieStore()
@@ -37,9 +36,7 @@ async function addMovieToList(listId: number) {
         <h3 class="mt-2 text-sm font-semibold text-gray-100">No Lists</h3>
         <p class="mt-1 text-sm text-gray-300">Get started by creating a new list.</p>
         <div class="mt-6">
-          <NuxtLink to="/list" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Go Create a List
-          </NuxtLink>
+          <NuxtLink to="/list" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"> Go Create a List </NuxtLink>
         </div>
       </div>
       <ul role="list" class="divide-y divide-gray-400">

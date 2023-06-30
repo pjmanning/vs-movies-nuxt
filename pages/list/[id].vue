@@ -27,7 +27,7 @@ const list = computed(() => {
         </div>
       </div>
     </template>
-    <div v-else-if="list?.movies.length > 0" class="mb-20">
+    <div v-else-if="list?.movies !== undefined && list?.movies.length > 0" class="mb-20">
       <MovieList :movies="list!.movies" />
     </div>
   </div>

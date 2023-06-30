@@ -15,7 +15,6 @@ export function useReview() {
   }
 
   function updateReview(review: Review, newRating: number, newContent: string, newDate: Date) {
-    // update the review
     review.rating = newRating
     review.content = newContent
     review.date = newDate

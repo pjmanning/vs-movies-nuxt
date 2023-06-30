@@ -30,6 +30,7 @@ function cancelReview() {
 
 function saveReview() {
   const review = movieStore.reviews.find((review) => review.id === props.movie.id)
+
   if (review) {
     updateReview(review, reviewRating.value, reviewText.value, new Date())
     toast.add({ id: 'review_updated', title: 'Review Updated', description: 'Successfully updated your review.', icon: 'i-heroicons-check-circle' })
@@ -37,9 +38,10 @@ function saveReview() {
     addReview(props.movie.id, reviewRating.value, reviewText.value, new Date())
     toast.add({ id: 'review_added', title: 'Review Added!', description: 'Successfully reviewed this movie.', icon: 'i-heroicons-check-circle' })
   }
+
   isEditReview.value = false
   currentReview.value = movieStore.reviews.find((review) => review.id === props.movie.id)
-  // emit to close modal
+
   emits('closeReviewModal')
 }
 </script>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Movie } from '@/types'
+import type { Movie, Review } from '@/types'
 import { useMovieStore } from '@/stores/movies'
 
 const movieStore = useMovieStore()
-const movies = movieStore.movies
-let movieIds = movies.map((movie: Movie) => movie.id)
-const { pending: similarPending, data: similar, error: similarError } = useLazyFetch(`/api/similar?ids=${movieIds}`)
+const reviews = movieStore.reviews
+let movieIds = reviews.map((review: Review) => review.id)
+const { pending: similarPending, data: similar, error: errorSimilar } = useLazyFetch(`/api/similar?ids=${movieIds}`)
 const { pending: popularPending, data: popular, error: errorPopular } = useLazyFetch<Movie[]>('/api/movies?type=popular')
 const { pending: top_ratedPending, data: topRated, error: errorTopRated } = useLazyFetch<Movie[]>('/api/movies?type=top_rated')
 const { pending: upcomingPending, data: upcoming, error: errorUpcoming } = useLazyFetch<Movie[]>('/api/movies?type=upcoming')
@@ -24,7 +24,7 @@ const sections = ref([
   <div v-if="similarPending || top_ratedPending || upcomingPending || now_playingPending" class="flex h-screen w-screen items-center justify-center">
     <Loading class="h-24 w-24" />
   </div>
-  <div v-else-if="similarError || errorTopRated || errorUpcoming || errorNowPlaying">Error</div>
+  <div v-else-if="errorSimilar || errorPopular || errorTopRated || errorUpcoming || errorNowPlaying">Error</div>
   <div v-else class="w-screen overflow-hidden pt-4">
     <div v-for="category in sections">
       <div class="flex items-center px-10 py-3">

@@ -6,6 +6,7 @@ const router = useRouter()
 const navigation = [
   { name: 'Movies', to: '/' },
   { name: 'Lists', to: '/list' },
+  { name: 'Reviews', to: '/reviews' },
 ]
 
 function changePage(item: any) {

@@ -29,7 +29,7 @@ const isListModalOpen = ref(false)
     <div v-if="pending" class="flex min-h-screen items-center justify-center">
       <Loading class="h-24 w-24" />
     </div>
-    <div v-else-if="error"></div>
+    <div v-else-if="error">Error</div>
     <div v-else-if="movie" class="mx-auto min-h-screen max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
       <!-- Movie details -->
       <div class="lg:max-w-lg lg:self-end">

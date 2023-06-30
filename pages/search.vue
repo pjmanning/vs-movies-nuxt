@@ -7,11 +7,6 @@ onErrorCaptured((e) => {
   error.value = e
 })
 
-interface SortOption {
-  name: String | null
-  val: String | null
-}
-
 const isLoading = ref(false)
 const isResults = ref(true)
 const movies = ref<Movie[]>([])
@@ -30,7 +25,7 @@ const filteredMovies = computed(() => {
   const moviesWithRating = sortedMovies.value.map((movie) => {
     const movieIndex = movies.value.findIndex((m) => m.id === movie.id)
     if (movieIndex !== -1) {
-      return { ...movie, rating: movies.value[movieIndex].rating }
+      return { ...movie, rating: movies.value[movieIndex].vote_average }
     } else {
       return movie
     }
@@ -42,11 +37,17 @@ const filteredMovies = computed(() => {
     return moviesWithRating.filter((item) => item.genre_ids.some((genre) => selectedGenres.value.includes(genre)))
   }
 })
+
 const numberOfPages = ref(0)
 const numberOfMovies = ref(0)
 const page = ref(1)
 const query = ref('')
 const year = ref(null)
+
+interface SortOption {
+  name: String | null
+  val: String | null
+}
 const sortOptions = [
   { name: 'Best Rating', val: 'vote_average.asc' },
   { name: 'Release Year', val: 'primary_release_date.asc' },
@@ -251,16 +252,6 @@ watch(
       <div class="my-20 flex justify-center">
         <UPagination v-model="page" :page-count="20" :total="numberOfMovies" />
       </div>
-      <!-- <div>
-          <div v-if="error">{{ error }}</div>
-          <Suspense>
-            <WatchList :header="`Search results for: ${route.query.title} ${route.query.year ? ' in ' + route.query.year : ''}`" :api="`search/movie`" :params="`&query=${title}${year ? `&primary_release_year=${year}` : ''}`" />
-
-            <template #fallback>
-              <Loading class="mt-44 h-20 w-20" />
-            </template>
-          </Suspense>
-        </div> -->
     </ul>
   </div>
 </template>
