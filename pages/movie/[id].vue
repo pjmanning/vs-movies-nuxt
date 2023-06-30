@@ -4,7 +4,6 @@ import type { Movie } from '@/types'
 
 const movieStore = useMovieStore()
 const route = useRoute()
-
 const {
   pending,
   data: movie,
@@ -14,29 +13,8 @@ const {
 })
 const currentReview = ref(movieStore.reviews.find((review) => review.id === movie.value?.id))
 
-////////// RATINGS //////////
-const updateRating = (movie: Movie, rating: number) => {
-  const movieIndex = movieStore.movies.findIndex((m) => m.id === movie.id)
-  if (movieIndex !== -1) {
-    // edit the rating in the reviews array
-    movieStore.movies[movieIndex].reviews = movieStore.movies[movieIndex].reviews.map((review) => {
-      return { ...review, rating: rating }
-    })
-  } else {
-    movieStore.movies.push({ ...movie, reviews: [{ id: Math.floor(Math.random() * 1000001), content: '', rating: rating, date: new Date() }] })
-  }
-}
-
 ////////// REVIEW MODAL //////////
 const isReviewModalOpen = ref(false)
-const openReviewModal = ref(false)
-const selectedMovie = ref({} as Movie)
-const reviewName = ref(null)
-const reviewContent = ref(null)
-function viewReviews(id: number) {
-  openReviewModal.value = true
-  //   selectedMovie.value = movie.value.find((movie) => movie.id === id) as Movie
-}
 function saveReview() {
   console.log('saveReview')
   isReviewModalOpen.value = false
