@@ -81,39 +81,46 @@ function cancelDelete() {
   </UModal>
 
   <!-- PAGE -->
-  <div class="mx-auto h-screen max-w-7xl px-4 py-10">
-    <h1 class="text-2xl font-bold">Your Lists</h1>
-    <div v-if="lists.length === 0" class="-mt-20 flex h-full flex-col place-content-center text-center">
-      <UIcon name="i-heroicons-film" class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
-      <h3 class="mt-2 text-sm font-semibold text-gray-100">No lists</h3>
-      <p class="mt-1 text-sm text-gray-400">Get started by creating a new list.</p>
-      <div class="mt-6">
-        <button @click="isListModalOpen = true" type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          <UIcon name="i-heroicons-plus-20-solid" class="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
-          New List
-        </button>
-      </div>
-    </div>
-    <div v-else-if="lists.length > 0" class="my-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-      <NuxtLink :to="`list/${list.id}`" v-for="list in lists" :key="list.name" class="relative flex items-center space-x-3 rounded-lg border border-gray-600 bg-violet-800 px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600">
-        <div class="min-w-0 flex-1">
-          <span class="absolute inset-0" aria-hidden="true" />
-          <p class="text-sm font-medium text-gray-100">{{ list.name }}</p>
-          <p class="truncate text-sm text-gray-300">{{ list.movies.length }} movies</p>
+  <ClientOnly>
+    <div class="mx-auto h-screen max-w-7xl px-4 py-10">
+      <h1 class="text-2xl font-bold">Your Lists</h1>
+
+      <template v-if="lists.length === 0">
+        <div class="flex h-full flex-col place-content-center text-center">
+          <UIcon name="i-heroicons-film" class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
+          <h3 class="mt-2 text-sm font-semibold text-gray-100">No lists</h3>
+          <p class="mt-1 text-sm text-gray-400">Get started by creating a new list.</p>
+          <div class="mt-6">
+            <button @click="isListModalOpen = true" type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              <UIcon name="i-heroicons-plus-20-solid" class="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+              New List
+            </button>
+          </div>
         </div>
-        <UButton @click.prevent="openDeleteModal(list)" icon="i-heroicons-trash" variant="outline" size="md" color="red" :padding="false" />
-      </NuxtLink>
-      <button @click="isListModalOpen = true" class="relative flex items-center space-x-3 rounded-lg border border-dashed border-gray-600 px-6 py-7 shadow-sm">
-        <div class="min-w-0 flex-1">
-          <button class="flex items-center focus:outline-none">
-            <span class="absolute inset-0" aria-hidden="true" />
-            <UIcon name="i-heroicons-plus-20-solid" class="mr-2 h-5 w-5" />
-            <p class="text-sm font-medium text-gray-100">Create a new list</p>
+      </template>
+      <template v-else-if="lists.length > 0">
+        <div class="my-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <NuxtLink :to="`list/${list.id}`" v-for="list in lists" :key="list.name" class="relative flex items-center space-x-3 rounded-lg border border-gray-600 bg-violet-800 px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-600">
+            <div class="min-w-0 flex-1">
+              <span class="absolute inset-0" aria-hidden="true" />
+              <p class="text-sm font-medium text-gray-100">{{ list.name }}</p>
+              <p class="truncate text-sm text-gray-300">{{ list.movies.length }} movies</p>
+            </div>
+            <UButton @click.prevent="openDeleteModal(list)" icon="i-heroicons-trash" variant="outline" size="md" color="red" :padding="false" />
+          </NuxtLink>
+          <button @click="isListModalOpen = true" class="relative flex items-center space-x-3 rounded-lg border border-dashed border-gray-600 px-6 py-7 shadow-sm">
+            <div class="min-w-0 flex-1">
+              <button class="flex items-center focus:outline-none">
+                <span class="absolute inset-0" aria-hidden="true" />
+                <UIcon name="i-heroicons-plus-20-solid" class="mr-2 h-5 w-5" />
+                <p class="text-sm font-medium text-gray-100">Create a new list</p>
+              </button>
+            </div>
           </button>
         </div>
-      </button>
+      </template>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <style scoped></style>
