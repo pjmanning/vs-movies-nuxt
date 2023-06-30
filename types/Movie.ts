@@ -3,7 +3,7 @@ import type { Review } from './Review'
 export interface Movie {
   adult: boolean
   backdrop_path: string
-  genre_ids: Number[]
+  genre_ids: number[]
   id: number
   original_language: string
   original_title: string

@@ -12,6 +12,11 @@ export default defineEventHandler(async (event) => {
       if (res.results) {
         const movieList = res.results
         for (let i = 0; i < 5; i++) {
+          // if movie already exists don't add it
+          if (movieArray.findIndex((m) => m.id === movieList[i].id) !== -1) {
+            continue
+          }
+
           movieArray.push(movieList[i])
         }
       } else {

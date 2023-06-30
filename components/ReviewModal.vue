@@ -35,7 +35,7 @@ function saveReview() {
     updateReview(review, reviewRating.value, reviewText.value, new Date())
     toast.add({ id: 'review_updated', title: 'Review Updated', description: 'Successfully updated your review.', icon: 'i-heroicons-check-circle' })
   } else {
-    addReview(props.movie.id, reviewRating.value, reviewText.value, new Date())
+    addReview(props.movie, reviewRating.value, reviewText.value, new Date())
     toast.add({ id: 'review_added', title: 'Review Added!', description: 'Successfully reviewed this movie.', icon: 'i-heroicons-check-circle' })
   }
 

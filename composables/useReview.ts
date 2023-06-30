@@ -1,12 +1,13 @@
 import { useMovieStore } from '@/stores/movies'
-import { Review } from '@/types'
+import { Movie, Review } from '@/types'
 
 export function useReview() {
   const movieStore = useMovieStore()
 
-  function addReview(id: number, rating: number, content: string, date: Date) {
+  function addReview(movie: Movie, rating: number, content: string, date: Date) {
     const review: Review = {
-      id,
+      id: movie.id,
+      movieName: movie.title,
       rating,
       content,
       date: new Date(),
