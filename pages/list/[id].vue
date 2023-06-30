@@ -3,15 +3,17 @@ import { useMovieStore } from '@/stores/movies'
 
 const movieStore = useMovieStore()
 const route = useRoute()
-const lists = movieStore.lists
+const lists = computed(() => {
+  return movieStore.lists
+})
 
 const list = computed(() => {
-  return lists.find((list) => list.id === Number(route.params.id))
+  return lists.value.find((list) => list.id === Number(route.params.id))
 })
 </script>
 
 <template>
-  <div class="mx-auto h-screen max-w-7xl px-4 py-10">
+  <div class="mx-auto min-h-screen max-w-7xl px-4 py-10">
     <h1 class="text-2xl font-bold">{{ list?.name }}</h1>
 
     <template v-if="list?.movies.length === 0">
@@ -28,7 +30,7 @@ const list = computed(() => {
       </div>
     </template>
     <div v-else-if="list?.movies !== undefined && list?.movies.length > 0" class="mb-20">
-      <MovieList :movies="list!.movies" />
+      <MovieList :movies="list!.movies" :listId="list.id" />
     </div>
   </div>
 </template>

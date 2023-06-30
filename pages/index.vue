@@ -3,8 +3,10 @@ import type { Movie, Review } from '@/types'
 import { useMovieStore } from '@/stores/movies'
 
 const movieStore = useMovieStore()
-const reviews = movieStore.reviews
-let movieIds = reviews.map((review: Review) => review.id)
+const reviews = computed(() => {
+  return movieStore.reviews
+})
+let movieIds = reviews.value.map((review: Review) => review.id)
 const { pending: similarPending, data: similar, error: errorSimilar } = useLazyFetch(`/api/similar?ids=${movieIds}`)
 const { pending: popularPending, data: popular, error: errorPopular } = useLazyFetch<Movie[]>('/api/movies?type=popular')
 const { pending: top_ratedPending, data: topRated, error: errorTopRated } = useLazyFetch<Movie[]>('/api/movies?type=top_rated')

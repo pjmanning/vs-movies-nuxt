@@ -4,7 +4,9 @@ import { useMovieStore } from '~/stores/movies'
 
 const movieStore = useMovieStore()
 const router = useRouter()
-const lists = movieStore.lists
+const lists = computed<List[]>(() => {
+  return movieStore.lists
+})
 const isListModalOpen = ref(false)
 const listName = ref('')
 

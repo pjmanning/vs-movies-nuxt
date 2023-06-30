@@ -3,7 +3,9 @@ import type { Review } from '@/types'
 import { useMovieStore } from '~/stores/movies'
 
 const movieStore = useMovieStore()
-const reviews: Review[] = movieStore.reviews
+const reviews = computed<Review[]>(() => {
+  return movieStore.reviews
+})
 
 function deleteReview(id: number) {
   const reviewIndex = movieStore.reviews.findIndex((review) => review.id === id)
