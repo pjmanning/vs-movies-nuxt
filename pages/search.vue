@@ -2,6 +2,10 @@
 import type { Movie } from '@/types/Movie'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 
+useHead({
+  title: 'Search',
+})
+
 const error: Ref<Error | null> = ref(null)
 onErrorCaptured((e) => {
   error.value = e

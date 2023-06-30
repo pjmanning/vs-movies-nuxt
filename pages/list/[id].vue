@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { useMovieStore } from '@/stores/movies'
 
+useHead({
+  title: 'List',
+})
+
 const movieStore = useMovieStore()
 const route = useRoute()
 const lists = computed(() => {

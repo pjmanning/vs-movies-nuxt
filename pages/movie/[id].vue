@@ -8,10 +8,12 @@ const {
   pending,
   data: movie,
   error,
-} = useFetch<Movie>(`/api/movie/${route.params.id}`, {
-  lazy: true,
-})
+} = useLazyFetch<Movie>(`/api/movie/${route.params.id}`)
 const currentReview = ref(movieStore.reviews.find((review) => review.id === movie.value?.id))
+
+useHead({
+  title: () => `${movie.value?.title}`,
+})
 
 ////////// REVIEW MODAL //////////
 const isReviewModalOpen = ref(false)

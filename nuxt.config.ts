@@ -16,4 +16,13 @@ export default defineNuxtConfig({
   },
 
   plugins: ['~/plugins/scroll.client.ts'],
+
+  app: {
+    head: {
+      titleTemplate: '%s | Vuevie Night',
+      htmlAttrs: {
+        lang: 'en',
+      },
+    },
+  },
 })

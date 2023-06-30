@@ -2,6 +2,10 @@
 import type { List } from '@/types'
 import { useMovieStore } from '~/stores/movies'
 
+useHead({
+  title: 'Lists',
+})
+
 const movieStore = useMovieStore()
 const router = useRouter()
 const lists = computed<List[]>(() => {

@@ -2,6 +2,10 @@
 import type { Review } from '@/types'
 import { useMovieStore } from '~/stores/movies'
 
+useHead({
+  title: 'Reviews',
+})
+
 const movieStore = useMovieStore()
 const reviews = computed<Review[]>(() => {
   return movieStore.reviews
