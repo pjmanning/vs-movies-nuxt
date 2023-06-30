@@ -17,7 +17,7 @@ const list = computed(() => {
     <h1 class="text-2xl font-bold">{{ list?.name }}</h1>
 
     <template v-if="list?.movies.length === 0">
-      <div class="-mt-24 flex h-full flex-col place-content-center text-center">
+      <div class="flex h-full flex-col place-content-center text-center">
         <UIcon name="i-heroicons-list-bullet" class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
         <h3 class="mt-2 text-sm font-semibold text-gray-100">No Movies</h3>
         <p class="mt-1 text-sm text-gray-400">Search for movies to add to your lists.</p>
