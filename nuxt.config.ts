@@ -4,6 +4,10 @@ export default defineNuxtConfig({
 
   modules: ['@vueuse/nuxt', '@pinia/nuxt', '@nuxthq/ui', '@formkit/nuxt'],
 
+  colorMode: {
+    preference: 'dark',
+  },
+
   runtimeConfig: {
     tmdbKey: process.env.NUXT_TMDB_KEY,
     public: {
