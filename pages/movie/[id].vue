@@ -78,15 +78,20 @@ const isListModalOpen = ref(false)
                   </div>
                   <p class="sr-only">{{ movie.vote_average / 2 }} out of 5 stars</p>
                 </div>
-                <p class="ml-2 text-sm text-gray-300">{{ movie.vote_count }} reviews -</p>
-
-                <div class="ml-2">
-                  <UButton v-if="currentReview" label="Your review" @click="isReviewModalOpen = true" />
-                  <UButton v-else label="Write a review" @click="isReviewModalOpen = true" />
+                <p class="ml-2 text-sm text-gray-300">{{ movie.vote_count }} reviews <span class="hidden sm:block">-</span></p>
+                <div class="mt-2 hidden sm:ml-2 sm:block">
+                  <UButton v-if="currentReview" block size="lg" label="Your review" @click="isReviewModalOpen = true" />
+                  <UButton v-else block size="lg" label="Write a review" @click="isReviewModalOpen = true" />
                   <ReviewModal :movie="movie" :is-review-modal-open="isReviewModalOpen" @update:isReviewModalOpen="isReviewModalOpen = $event" @saveReview="saveReview" @closeReviewModal="isReviewModalOpen = false" />
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="mt-2 block sm:ml-2 sm:hidden">
+            <UButton v-if="currentReview" block size="lg" label="Your review" @click="isReviewModalOpen = true" />
+            <UButton v-else block size="lg" label="Write a review" @click="isReviewModalOpen = true" />
+            <ReviewModal :movie="movie" :is-review-modal-open="isReviewModalOpen" @update:isReviewModalOpen="isReviewModalOpen = $event" @saveReview="saveReview" @closeReviewModal="isReviewModalOpen = false" />
           </div>
 
           <div class="mt-4 space-y-6">

@@ -35,7 +35,7 @@ const sections = ref([
 
       <div class="relative">
         <div class="overflow-y-auto">
-          <ul class="flex w-max gap-2 p-2 px-10">
+          <ul class="flex w-max gap-2 p-2 px-4 sm:px-10">
             <Loading v-if="category.pending" class="my-10 h-20 w-20" />
             <div v-else-if="category.title === 'For You' && category.movies?.length === 0">
               <NuxtLink to="/search" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none">
